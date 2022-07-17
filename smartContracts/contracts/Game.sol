@@ -71,7 +71,7 @@ contract Game is ERC721 ("HeroGame", "HG") {
     }
 
     function mintCharacterNFT(uint256 _characterId) external payable {
-        require(msg.value == mintNFTPrice);
+        require(msg.value == mintNFTPrice, 'You must pay the price of minting a character NFT');
 
         _tokenIds.increment();
         uint256 currentId = _tokenIds.current();

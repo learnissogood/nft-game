@@ -74,5 +74,30 @@ describe("Game", function () {
       // assert.equal(nft.toString(), '1');
       expect(await game.balanceOf(deployer.address)).to.equal(1);
     });
+
+    it('should revert the tx if the user does not pay the feeMintPrice', async () => {
+      await expect(game.mintCharacterNFT(0, { value: 0 })).to.be.revertedWith('You must pay the price of minting a character NFT');
+    });
+  });
+
+  describe('attackBoss function', async () => {
+
+    beforeEach(async () => {
+      await game.connect(addr1).mintCharacterNFT(0, { value: mintPrice });
+    });
+
+    it('hpBoss should decrease by the amount of damage', async () => {
+      await game.connect(addr1).attackBoss();
+      const boss = await game.bigBoss();
+      const hpBoss = boss.hp.toString();
+      assert.equal(hpBoss, '9900');
+    });
+
+    it('hpWarrior should decrease by the amount of damage received by the boss', async () => {
+      await game.attackBoss();
+      const warrior = await game.nftHolderAttributes(1);
+      const warriorHP = warrior.hp.toString();
+      console.log(warriorHP);
+    });
   });
 });
