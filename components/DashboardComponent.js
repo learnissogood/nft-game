@@ -93,7 +93,7 @@ const DashboardComponent = () => {
             </h3>
           </div>
           <div className="flex justify-center w-full">
-            {nft && (
+            {nft ? (
               <div className="w-[350px] pt-8 text-center text-white">
                 <div className="border shadow rounded-xl overflow-hidden">
                   <div>
@@ -131,6 +131,10 @@ const DashboardComponent = () => {
                     </button>
                   </div>
                 </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center text-center text-3xl pt-[170px]">
+                <h1 className="text-white">You dont have any item!</h1>
               </div>
             )}
           </div>

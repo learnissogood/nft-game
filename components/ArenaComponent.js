@@ -56,22 +56,24 @@ const ArenaComponent = () => {
 
         const data = await gameContract.getMyNFT(account);
 
-        console.log(data);
+        if (data.name === "") {
+          setNft(null);
+        } else {
+          let item = {
+            name: data.name,
+            image: "https://cloudflare-ipfs.com/ipfs/" + data.imageURI,
+            hp: data.hp.toNumber(),
+            maxHp: data.maxHp.toNumber(),
+            attackDamage: data.attackDamage.toNumber(),
+          };
 
-        let item = {
-          name: data.name,
-          image: "https://cloudflare-ipfs.com/ipfs/" + data.imageURI,
-          hp: data.hp.toNumber(),
-          maxHp: data.maxHp.toNumber(),
-          attackDamage: data.attackDamage.toNumber(),
-        };
-
-        setNft(item);
+          setNft(item);
+        }
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const attackBoss = async () => {
     try {
@@ -84,7 +86,7 @@ const ArenaComponent = () => {
           Game.abi,
           signer
         );
-        
+
         setAttacking(true);
 
         const tx = await gameContract.attackBoss();
@@ -97,12 +99,12 @@ const ArenaComponent = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (network === "Rinkeby") {
       fetchBoss();
-      fetchNft()
+      fetchNft();
     }
   }, [network]);
 
@@ -162,7 +164,10 @@ const ArenaComponent = () => {
                     </p>
                   </div>
                   <div>
-                    <button className="w-full bg-black h-12" onClick={() => attackBoss()}>
+                    <button
+                      className="w-full bg-black h-12"
+                      onClick={() => attackBoss()}
+                    >
                       <p className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-2xl font-extrabold pt-2">
                         ATTACK BOSS
                       </p>
@@ -171,7 +176,7 @@ const ArenaComponent = () => {
                 </div>
               </div>
             )}
-            {nft && (
+            {nft ? (
               <div className="flex items-center justify-center w-[250px] pt-8 text-center text-white">
                 <div className="border shadow rounded-xl overflow-hidden">
                   <div>
@@ -202,6 +207,10 @@ const ArenaComponent = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center w-[250px] pt-8 text-center text-3xl">
+                <h1 className="text-white">You Dont have any Warrior! Please go and MINT one!!</h1>
               </div>
             )}
           </div>
