@@ -1,0 +1,1 @@
+export const gameContractAddress = '0xcf5De2dDD7fB1715070F2809571f40fC5b703c8f';

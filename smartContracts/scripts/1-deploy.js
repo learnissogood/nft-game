@@ -14,12 +14,6 @@ const main = async () => {
   );
   await gameContract.deployed();
   console.log("Contract Deployed to: ", gameContract.address);
-
-  const fee = hre.ethers.utils.parseEther('0.1');
-
-  let tx = await gameContract.mintCharacterNFT(0, { value: fee });
-  await tx.wait();
-  console.log("Character 0 minted");
 }
 
 const runMain = async () => {

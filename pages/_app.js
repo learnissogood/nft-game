@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import 'antd/dist/antd.css';
+import React, { useEffect, useState } from 'react';
+import { GameProvider } from '../context/GameContext';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function Game({ Component, pageProps }) {
+  return (
+    <GameProvider>
+      <Component {...pageProps} />
+    </GameProvider>
+  )
 }
 
-export default MyApp
+export default Game;
